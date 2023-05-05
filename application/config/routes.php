@@ -72,3 +72,10 @@ $route['rak/store'] = 'RakController/store';
 $route['rak/get-by-id'] = 'RakController/getById';
 $route['rak/update'] = 'RakController/update';
 $route['rak/delete'] = 'RakController/delete';
+
+// Rak
+$route['surat'] = 'SuratController/index';
+$route['surat/store'] = 'SuratController/store';
+$route['surat/get-by-id'] = 'SuratController/getById';
+$route['surat/update'] = 'SuratController/update';
+$route['surat/delete'] = 'SuratController/delete';

@@ -79,3 +79,6 @@ $route['surat/store'] = 'SuratController/store';
 $route['surat/get-by-id'] = 'SuratController/getById';
 $route['surat/update'] = 'SuratController/update';
 $route['surat/delete'] = 'SuratController/delete';
+
+// Laporan
+$route['laporan'] = 'LaporanController/index';

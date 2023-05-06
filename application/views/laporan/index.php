@@ -6,17 +6,7 @@ $CI->load->model('RakModel','rak_model');
 <div class="card mt-2">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-            <h4>surat Surat</h4>
-            <div>
-                <a href="#" class="btn btn-dark fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add">
-                    Tambah
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 5l0 14"></path>
-                        <path d="M5 12l14 0"></path>
-                    </svg>
-                </a>
-            </div>
+            <h4>Laporan</h4>
         </div>
         <hr class="border" />
         <div class="table-responsive">
@@ -28,7 +18,6 @@ $CI->load->model('RakModel','rak_model');
                         <th>Kategori</th>
                         <th>Rak</th>
                         <th>Tanggal Surat</th>
-                        <th>File Surat</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -48,25 +37,6 @@ $CI->load->model('RakModel','rak_model');
                             <td><?= $val->nama_rak ?></td>
                             <td><?= $val->tanggal_surat ?></td>
                             <td><a href="<?= './uploads/'.$val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
-                            <td>
-                                <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
-                                        <path d="M13.5 6.5l4 4"></path>
-                                    </svg>
-                                </span>
-                                <span class="ms-2" style="cursor: pointer;" onclick="deleteData('<?= $val->id ?>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M4 7l16 0"></path>
-                                        <path d="M10 11l0 6"></path>
-                                        <path d="M14 11l0 6"></path>
-                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                                    </svg>
-                                </span>
-                            </td>
                         </tr>
                     <?php endforeach ?>
                 <?php endforeach ?>

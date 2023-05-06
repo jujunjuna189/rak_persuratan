@@ -34,4 +34,16 @@ class RakModel extends CI_Model
         $result = $this->db->delete($this->table, ['id' => $id]);
         return $result;
     }
+    
+    public function getSurat($id)
+    {
+        $this->db->select('surat.*,kategori.nama_kategori,rak.nama_rak');
+        $this->db->from('surat');
+        $this->db->join('kategori','kategori.id = surat.kategori_id');
+        $this->db->join('rak','rak.id = surat.rak_id');
+        $this->db->where('surat.rak_id',$id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }

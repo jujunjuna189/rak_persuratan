@@ -15,9 +15,34 @@ class LaporanController extends CI_Controller
 
     public function index()
     {
-        $data['surat'] = $this->surat_model->get();
+        $this->db->select('surat.*,kategori.nama_kategori,rak.nama_rak');
+        $this->db->from('surat');
+        $this->db->join('kategori','kategori.id = surat.kategori_id');
+        $this->db->join('rak','rak.id = surat.rak_id');
+        if(isset($_GET['filter_rak_id'])){
+            if($_GET['filter_rak_id'] != ''){
+                $this->db->where('surat.rak_id',$_GET['filter_rak_id']);
+            }
+        }
+        if(isset($_GET['filter_kategori_id'])){
+            if($_GET['filter_kategori_id'] != ''){
+            $this->db->where('surat.kategori_id',$_GET['filter_kategori_id']);
+            }
+        }
+        if(isset($_GET['date_awal'])){
+            if($_GET['date_awal'] != '' && $_GET['date_akhir'] != ''){
+            $this->db->where('surat.tanggal_surat >= ',$_GET['date_awal']);
+            $this->db->where('surat.tanggal_surat <= ',$_GET['date_akhir']);
+            }
+        }
+
+        $query = $this->db->get()->result();
+        $data['surat'] = $query;
         $data['kategori'] = $this->kategori_model->get();
         $data['rak'] = $this->rak_model->get();
+        if(isset($_GET['download'])){
+            $this->load->view('laporan/pdf', $data); // Contant
+        }else{
 
         $this->load->view('layouts/header'); //Header berisi link css dan font serta aset lainya
         $this->load->view('components/navbar/index'); // Navbar berisi navbar
@@ -27,7 +52,10 @@ class LaporanController extends CI_Controller
         $this->load->view('components/content/end'); // Content end verisi div penutup dari content start
         $this->load->view('components/modal_confirm/index'); // Modal Confirm
         $this->load->view('layouts/footer'); // Footer berisi assets footer
+        }
     }
+
+    
 
     public function getById()
     {

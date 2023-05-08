@@ -38,4 +38,6 @@ class SuratModel extends CI_Model
         $result = $this->db->delete($this->table, ['id' => $id]);
         return $result;
     }
+
+
 }

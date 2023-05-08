@@ -7,6 +7,38 @@ $CI->load->model('RakModel','rak_model');
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h4>Laporan</h4>
+            <form action="" method="get">
+            <div class="d-flex justify-content-start gap-2">
+                <select name="filter_rak_id" id="" class="form-control">
+                    <option value="">Semua Rak</option>
+                    <?php foreach($rak as $rakItem): ?>
+                        <option value="<?= $rakItem->id ?>" <?php if(isset($_GET['filter_rak_id'])){ 
+                            if($_GET['filter_rak_id'] == $rakItem->id){
+                                echo 'selected';
+                            }
+                         } ?> ><?= $rakItem->nama_rak ?></option>
+                    <?php endforeach ?>
+                </select>
+                <select name="filter_kategori_id" id="" class="form-control">
+                    <option value="">Semua Kategori</option>
+                    <?php foreach($kategori as $kategoriItem): ?>
+                        <option value="<?= $kategoriItem->id ?>" <?php if(isset($_GET['filter_kategori_id'])){ 
+                            if($_GET['filter_kategori_id'] == $kategoriItem->id){
+                                echo 'selected';
+                            }
+                         } ?> ><?= $kategoriItem->nama_kategori ?></option>
+                    <?php endforeach ?>
+                </select>
+                <input type="date" name="date_awal" id="" class="form-control" placeholder="Tanggal Awal" value="<?php if(isset($_GET['date_awal'])){
+                    echo $_GET['date_awal'];
+                } ?>" >
+                <input type="date" name="date_akhir" id="" class="form-control" placeholder="Tanggal Akhir" value="<?php if(isset($_GET['date_akhir'])){
+                    echo $_GET['date_akhir'];
+                } ?>">
+                <input type="submit" class="btn btn-dark fw-semibold" name="filter" value="Filter">
+                <input type="submit" class="btn btn-danger fw-semibold" name="download" value="Download PDF" formtarget="_blank"> 
+            </div>
+            </form>
         </div>
         <hr class="border" />
         <div class="table-responsive">
@@ -22,14 +54,7 @@ $CI->load->model('RakModel','rak_model');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($rak as $index => $valRak) : ?>
-                        <tr class="bg-light">
-                            <td colspan="7"><?= $valRak->nama_rak ?></td>
-                        </tr>
-                        <?php
-                            $listSurat = $CI->rak_model->getSurat($valRak->id);    
-                        ?>
-                        <?php foreach ($listSurat as $index => $val) : ?>
+                        <?php foreach ($surat as $index => $val) : ?>
                         <tr>
                             <td><?= $index + 1 ?></td>
                             <td><?= $val->nama_surat ?></td>
@@ -39,128 +64,12 @@ $CI->load->model('RakModel','rak_model');
                             <td><a href="<?= './uploads/'.$val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
                         </tr>
                     <?php endforeach ?>
-                <?php endforeach ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<!-- Modal -->
-<!-- Add -->
-<div class="modal fade" id="modal-add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content rounded-2">
-            <div class="modal-body">
-                <form action="<?= base_url('surat/store') ?>" method="post" enctype="multipart/form-data">
-                    <div class="d-flex justify-content-between mb-4">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah surat</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Kategori surat">Kategori surat</label>
-                            <select name="kategori_id" id="kategori_id" class="form-control fw-semibold">
-                                <?php foreach($kategori as $kategoriSurat) : ?>
-                                    <option value="<?= $kategoriSurat->id ?>"><?= $kategoriSurat->nama_kategori ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                        <label for="Rak surat">Rak surat</label>
-                            <select name="rak_id" id="rak_id" class="form-control fw-semibold">
-                            <?php foreach($rak as $rakSurat) : ?>
-                                    <option value="<?= $rakSurat->id ?>"><?= $rakSurat->nama_rak ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">Nama surat</label>
-                            <input type="text" name="nama_surat" id="nama_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">File surat</label>
-                            <input type="file" name="file_surat" id="file_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">Tanggal surat</label>
-                            <input type="date" name="tanggal_surat" id="tanggal_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end gap-2 px-3 my-4">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-dark">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Update -->
-<div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content rounded-2">
-            <div class="modal-body">
-                <form action="<?= base_url('surat/update') ?>" method="post" enctype="multipart/form-data">
-                    <div class="d-flex justify-content-between mb-4">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit surat</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <input type="hidden" name="id" id="id">
-                            <label for="Kategori surat">Kategori surat</label>
-                            <select name="kategori_id" id="kategori_id" class="form-control fw-semibold">
-                                <?php foreach($kategori as $kategoriSurat) : ?>
-                                    <option value="<?= $kategoriSurat->id ?>"><?= $kategoriSurat->nama_kategori ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                        <label for="Rak surat">Rak surat</label>
-                            <select name="rak_id" id="rak_id" class="form-control fw-semibold">
-                            <?php foreach($rak as $rakSurat) : ?>
-                                    <option value="<?= $rakSurat->id ?>"><?= $rakSurat->nama_rak ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">Nama surat</label>
-                            <input type="text" name="nama_surat" id="nama_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">File surat</label>
-                            <input type="file" name="file_surat" id="file_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="form-group mb-3">
-                            <label for="Nama surat">Tanggal surat</label>
-                            <input type="date" name="tanggal_surat" id="tanggal_surat" class="form-control fw-semibold" placeholder="...">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end gap-2 px-3 my-4">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-dark">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
     const config = {

@@ -9,9 +9,12 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/signature/css/jquery.signature.css') ?>">
     <!-- Jquery -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     <script src="<?= base_url('assets/js/jquery/jquery-3.6.3.min.js') ?>"></script>
+    <script src="<?= base_url('assets/signature/js/jquery-ui-1.12.1/jquery-ui.min.js') ?>"></script>
+    <script src="<?= base_url('assets/signature/js/jquery.signature.js') ?>"></script>
   
   
     <style>

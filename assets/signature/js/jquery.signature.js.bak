@@ -118,7 +118,6 @@ $(selector).signature({color: 'blue', guideline: true}) */
 			if (this.options.disabled) {
 				return;
 			}
-			this.ctx.clearRect(0, 0, this.element.width(), this.element.height());
 			this.ctx.fillRect(0, 0, this.element.width(), this.element.height());
 			if (this.options.guideline) {
 				this.ctx.save();

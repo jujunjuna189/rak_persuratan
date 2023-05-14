@@ -33,6 +33,7 @@ $CI->load->model('RakModel','rak_model');
                         <th>File Surat</th>
                         <th>File Disposisi</th>
                         <th>Status</th>
+                        <th>TTD</th>
                         <?php if($this->session->userdata('role')->role_key == 1) : ?>
                         <th>Aksi</th>
                         <?php endif ?>
@@ -41,7 +42,7 @@ $CI->load->model('RakModel','rak_model');
                 <tbody>
                     <?php foreach ($rak as $index => $valRak) : ?>
                         <tr class="bg-light">
-                            <td colspan="9"><?= $valRak->nama_rak ?></td>
+                            <td colspan="10"><?= $valRak->nama_rak ?></td>
                         </tr>
                         <?php
                             $listSurat = $CI->rak_model->getSurat($valRak->id);    
@@ -67,6 +68,11 @@ $CI->load->model('RakModel','rak_model');
                                     echo 'Ditolak';
                                 }
                             ?></td>
+                            <td>
+                                <?php if($val->ttd != null || $val->ttd != '') : ?>
+                                    <img src="<?= $val->ttd ?>" width="150">
+                                <?php endif ?>
+                            </td>
                             <?php if($this->session->userdata('role')->role_key == 1) : ?>
                             <td>
                                 <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">

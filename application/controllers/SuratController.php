@@ -137,6 +137,7 @@ class SuratController extends CI_Controller
         if($this->input->post('status') == 2){
             $data['status'] = 2;
             $data['deskripsi'] = $this->input->post('deskripsi');
+            $data['ttd'] = $this->input->post('signature');
         }else{
             $data['status'] = 3;
         }

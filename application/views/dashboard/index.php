@@ -51,17 +51,25 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="<?= base_url('surat/updatestatus') ?>" method="post">
+        <form action="<?= base_url('surat/updatestatus') ?>" method="post" enctype="multipart/form-data" id="form-save-signature">
 			<div class="form-group">
 				<label for="">Deskripsi</label>
 				<input type="hidden" name="id" id="id">
 				<input type="hidden" name="status" id="status" value="2">
+				<input type="hidden" name="signature" id="signature">
 				<textarea name="deskripsi" class="form-control" id="" cols="30" rows="1" required></textarea>
+			</div>
+			<div class="form-group">
+			<div class="text-right py-2">
+                <span class="btn btn-danger" id="clear" style="cursor: pointer">Clear</span>
+			</div>
+			<div id="sig"></div>
+			 <small class="text-danger error-signature"></small>
 			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-			<button type="submit" class="btn btn-primary">Setujui</button>
+			<button type="button" class="btn btn-primary btn-save">Setujui</button>
 		</div>
 	</form>
     </div>
@@ -72,4 +80,19 @@
 		var suratId = $(e.relatedTarget).data('id');
 		$(e.currentTarget).find('input[name="id"]').val(suratId);
 	});
+	$(document).ready(function () {
+    var sig = $('#sig').signature({ guideline: true });
+    $('#clear').click(function () {
+        sig.signature('clear');
+    });
+    $('.btn-save').click(function () {
+        var signature = sig.signature('toDataURL', 'image/png');
+        $('#signature').val(signature);
+        if (sig.signature('isEmpty')) {
+            $('.error-signature').html('Tanda tangan masih kosong');
+        } else {
+            $('#form-save-signature').submit();
+        }
+    });
+});
 </script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2023 at 05:17 AM
+-- Generation Time: May 14, 2023 at 02:36 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -57,7 +57,29 @@ CREATE TABLE `rak` (
 --
 
 INSERT INTO `rak` (`id`, `nama_rak`, `nomor_rak`) VALUES
-(1, 'Rak 2', '02');
+(1, 'Rak 2', '02'),
+(4, 'rak 3', '3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL,
+  `role_key` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `role_key`, `role`) VALUES
+(1, '0', 'user'),
+(2, '1', 'Sub Bidang'),
+(3, '2', 'Kepala Dinas');
 
 -- --------------------------------------------------------
 
@@ -71,16 +93,22 @@ CREATE TABLE `surat` (
   `rak_id` int(11) NOT NULL,
   `nama_surat` varchar(255) NOT NULL,
   `tanggal_surat` varchar(255) NOT NULL,
-  `file_surat` varchar(255) NOT NULL
+  `file_surat` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `file_disposisi` varchar(255) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
+  `ttd` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `surat`
 --
 
-INSERT INTO `surat` (`id`, `kategori_id`, `rak_id`, `nama_surat`, `tanggal_surat`, `file_surat`) VALUES
-(7, 4, 1, 'tes2', '2023-05-05', '6538.xlsx'),
-(8, 4, 1, 'tes', '2023-05-05', '6077');
+INSERT INTO `surat` (`id`, `kategori_id`, `rak_id`, `nama_surat`, `tanggal_surat`, `file_surat`, `status`, `file_disposisi`, `deskripsi`, `ttd`) VALUES
+(7, 4, 1, 'tes2', '2023-05-05', '6538.xlsx', '0', '', '', ''),
+(8, 4, 1, 'tes', '2023-05-05', '6077', '2', '', 'ssa', ''),
+(9, 5, 4, 'Surat 3', '2023-05-06', '7754.xlsx', '0', '', '', ''),
+(10, 4, 1, 'sd', '2023-05-13', '1088.xlsx', '1', '1088.xlsx', '', '');
 
 -- --------------------------------------------------------
 
@@ -93,15 +121,19 @@ CREATE TABLE `users` (
   `nama` varchar(255) NOT NULL,
   `jenis_kelamin` enum('Laki-Laki','Perempuan') NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nama`, `jenis_kelamin`, `username`, `password`) VALUES
-(1, 'Ujun Junaedi', 'Laki-Laki', '123456', '123456');
+INSERT INTO `users` (`id`, `nama`, `jenis_kelamin`, `username`, `password`, `role_id`) VALUES
+(1, 'Ujun Junaedi', 'Laki-Laki', '123456', '123456', 1),
+(6, 'user sub bidang', 'Laki-Laki', 'sub_bidang', '123456', 2),
+(7, 'user kepala dinas', 'Laki-Laki', 'kepala_dinas', '123456', 3),
+(8, 's', 'Laki-Laki', 's', '123123123', 1);
 
 --
 -- Indexes for dumped tables
@@ -117,6 +149,12 @@ ALTER TABLE `kategori`
 -- Indexes for table `rak`
 --
 ALTER TABLE `rak`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -146,19 +184,25 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `rak`
 --
 ALTER TABLE `rak`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `surat`
 --
 ALTER TABLE `surat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

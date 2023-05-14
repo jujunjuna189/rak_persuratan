@@ -25,6 +25,9 @@ class AuthController extends CI_Controller
         $login = $this->user_model->getWhere(['username' => $username, 'password' => $password]);
 
         if (count($login) > 0) {
+            $role = $this->user_model->getRole(['id' => $login[0]->role_id]);
+            $this->session->set_userdata(['role' => $role]);
+            $this->session->set_userdata(['user' => $login[0]]);
             redirect('dashboard');
         } else {
             $this->session->set_flashdata('error', [
@@ -46,7 +49,8 @@ class AuthController extends CI_Controller
         $data['nama'] = $this->input->post('nama');
         $data['username'] = $this->input->post('username');
         $data['password'] = $this->input->post('password');
-
+        $role = $this->db->get_where('role',['role_key' => 0])->result()[0];
+        $data['role_id'] = $role->id;
         $register = $this->user_model->store($data);
         redirect('login');
     }

@@ -23,6 +23,12 @@ class UserModel extends CI_Model
         return $query->result()[0];
     }
 
+    public function getRole($where)
+    {
+        $query = $this->db->get_where('role', $where);    
+        return $query->result()[0];
+    }
+
     public function getWhere($where)
     {
         $query = $this->db->get_where($this->table, $where);

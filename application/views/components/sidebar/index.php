@@ -18,7 +18,8 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item border-bottom">
+            <?php if($this->session->userdata('role')->role_key == 1) : ?>
+                <li class="nav-item border-bottom">
                 <a href="<?= base_url('rak') ?>" class="nav-link fw-semibold d-flex py-3 align-items-center text-dark rounded-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -45,6 +46,7 @@
                     Kategori Surat
                 </a>
             </li>
+            <?php endif  ?>
             <li class="nav-item border-bottom">
                 <a href="<?= base_url('surat') ?>" class="nav-link fw-semibold d-flex py-3 align-items-center text-dark rounded-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -8,6 +8,7 @@ $CI->load->model('RakModel','rak_model');
         <div class="d-flex justify-content-between">
             <h4>surat Surat</h4>
             <div>
+            <?php if($this->session->userdata('role')->role_key == 1) : ?>
                 <a href="#" class="btn btn-dark fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add">
                     Tambah
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -16,6 +17,7 @@ $CI->load->model('RakModel','rak_model');
                         <path d="M5 12l14 0"></path>
                     </svg>
                 </a>
+            <?php endif ?>
             </div>
         </div>
         <hr class="border" />
@@ -29,13 +31,17 @@ $CI->load->model('RakModel','rak_model');
                         <th>Rak</th>
                         <th>Tanggal Surat</th>
                         <th>File Surat</th>
+                        <th>File Disposisi</th>
+                        <th>Status</th>
+                        <?php if($this->session->userdata('role')->role_key == 1) : ?>
                         <th>Aksi</th>
+                        <?php endif ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rak as $index => $valRak) : ?>
                         <tr class="bg-light">
-                            <td colspan="7"><?= $valRak->nama_rak ?></td>
+                            <td colspan="9"><?= $valRak->nama_rak ?></td>
                         </tr>
                         <?php
                             $listSurat = $CI->rak_model->getSurat($valRak->id);    
@@ -48,6 +54,20 @@ $CI->load->model('RakModel','rak_model');
                             <td><?= $val->nama_rak ?></td>
                             <td><?= $val->tanggal_surat ?></td>
                             <td><a href="<?= './uploads/'.$val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
+                            <td><a href="<?= './uploads/'.$val->file_disposisi ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
+                            <td><?php
+                                if($val->status == 0){
+                                    echo 'Pending';
+                                }elseif($val->status == 1){
+                                    echo 'Sedang Diajukan';
+                                }elseif($val->status == 2){
+                                    echo 'Disetujui';
+                                }
+                                else{
+                                    echo 'Ditolak';
+                                }
+                            ?></td>
+                            <?php if($this->session->userdata('role')->role_key == 1) : ?>
                             <td>
                                 <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -56,6 +76,9 @@ $CI->load->model('RakModel','rak_model');
                                         <path d="M13.5 6.5l4 4"></path>
                                     </svg>
                                 </span>
+                                <?php if($val->status == 0) : ?>
+                                    <span class="p-1 rounded" style="cursor:pointer;" onclick="ajukanData('<?= $val->id ?>')"><i class="fa fa-upload text-dark"></i></span>
+                                <?php endif ?>
                                 <span class="ms-2" style="cursor: pointer;" onclick="deleteData('<?= $val->id ?>')">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -67,6 +90,7 @@ $CI->load->model('RakModel','rak_model');
                                     </svg>
                                 </span>
                             </td>
+                            <?php endif ?>
                         </tr>
                     <?php endforeach ?>
                 <?php endforeach ?>
@@ -115,6 +139,12 @@ $CI->load->model('RakModel','rak_model');
                     <div class="px-3">
                         <div class="form-group mb-3">
                             <label for="Nama surat">File surat</label>
+                            <input type="file" name="file_surat" id="file_surat" class="form-control fw-semibold" placeholder="...">
+                        </div>
+                    </div>
+                    <div class="px-3">
+                        <div class="form-group mb-3">
+                            <label for="Nama surat">File Disposisi</label>
                             <input type="file" name="file_surat" id="file_surat" class="form-control fw-semibold" placeholder="...">
                         </div>
                     </div>
@@ -178,6 +208,12 @@ $CI->load->model('RakModel','rak_model');
                     </div>
                     <div class="px-3">
                         <div class="form-group mb-3">
+                            <label for="Nama surat">File Disposisi</label>
+                            <input type="file" name="file_surat" id="file_surat" class="form-control fw-semibold" placeholder="...">
+                        </div>
+                    </div>
+                    <div class="px-3">
+                        <div class="form-group mb-3">
                             <label for="Nama surat">Tanggal surat</label>
                             <input type="date" name="tanggal_surat" id="tanggal_surat" class="form-control fw-semibold" placeholder="...">
                         </div>
@@ -191,16 +227,36 @@ $CI->load->model('RakModel','rak_model');
         </div>
     </div>
 </div>
+<!-- Confirm ajukan -->
+<div class="modal fade" id="modal-confirm-ajukan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-2">
+            <div class="modal-body">
+                <div class="d-flex justify-content-between mb-4">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Apakah anda yakin?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div>Apakah yakin akan mengajukan data ini ?</div>
+                <div class="d-flex justify-content-end gap-2 px-3 my-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" id="button-ok" class="btn btn-dark">Oke</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     const config = {
         update_url: '<?= base_url('surat/get-by-id?id=') ?>',
         delete_url: '<?= base_url('surat/delete?id=') ?>',
+        ajukan_url: '<?= base_url('surat/ajukan?id=') ?>',
     };
     const modal = {
         add: '#modal-add',
         update: '#modal-edit',
         confirm_delete: '#modal-confirm-delete',
+        confirm_ajukan: '#modal-confirm-ajukan',
     };
     const field = {
         id: '#id',
@@ -258,6 +314,20 @@ $CI->load->model('RakModel','rak_model');
     const executeDelete = async (id) => {
         await hitUrl({
             url: config.delete_url + id,
+            callback: (res) => {
+                location.reload();
+            }
+        });
+    }
+
+    const ajukanData = (id) => {
+        openModal(modal.confirm_ajukan);
+        $(modal.confirm_ajukan + ' #button-ok').attr('onclick', 'executeAjukan(' + id + ')');
+    }
+
+    const executeAjukan = async (id) => {
+        await hitUrl({
+            url: config.ajukan_url + id,
             callback: (res) => {
                 location.reload();
             }

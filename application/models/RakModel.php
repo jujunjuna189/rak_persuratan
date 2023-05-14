@@ -42,6 +42,7 @@ class RakModel extends CI_Model
         $this->db->join('kategori','kategori.id = surat.kategori_id');
         $this->db->join('rak','rak.id = surat.rak_id');
         $this->db->where('surat.rak_id',$id);
+        $this->db->order_by('id','desc');
         $query = $this->db->get();
         return $query->result();
     }

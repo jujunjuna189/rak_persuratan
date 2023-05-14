@@ -39,5 +39,6 @@ class SuratModel extends CI_Model
         return $result;
     }
 
+    
 
 }

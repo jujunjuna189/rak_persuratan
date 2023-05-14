@@ -12,7 +12,15 @@
     <!-- Jquery -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     <script src="<?= base_url('assets/js/jquery/jquery-3.6.3.min.js') ?>"></script>
-    
+  
+  
+    <style>
+        .kbw-signature {
+            width: 400px;
+            height: 200px;
+        }
+    </style>
+
 </head>
 
 <body class="bg-primary-light">

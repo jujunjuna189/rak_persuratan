@@ -55,6 +55,13 @@ class SuratController extends CI_Controller
         $this->upload->do_upload('file_surat');
         $uploaded_data = $this->upload->data();
         $data['file_surat'] = $uploaded_data['file_name'];
+        $config2['upload_path'] = FCPATH .'/uploads/';
+        $config2['allowed_types'] = 'pdf|docx|doc|xlsx';
+        $config2['file_name'] =  rand(0,9999);
+        $this->load->library('upload', $config2);
+        $this->upload->do_upload('file_disposisi');
+        $uploaded_data2 = $this->upload->data();
+        $data['file_disposisi'] = $uploaded_data2['file_name'];
         $this->surat_model->store($data);
         redirect('surat');
     }
@@ -100,6 +107,15 @@ class SuratController extends CI_Controller
             $uploaded_data = $this->upload->data();
             $data['file_surat'] = $uploaded_data['file_name'];
         }
+        if($this->input->post('file_surat') != NULL){
+            $config['upload_path'] = FCPATH .'/uploads/';
+            $config['allowed_types'] = 'pdf|docx|doc|xlsx';
+            $config['file_name'] =  rand(0,9999);
+            $this->load->library('upload', $config);
+            $this->upload->do_upload('file_disposisi');
+            $uploaded_data = $this->upload->data();
+            $data['file_disposisi'] = $uploaded_data['file_name'];
+        }
         $this->surat_model->update($this->input->post('id'), $data);
         redirect('surat');
     }
@@ -108,6 +124,24 @@ class SuratController extends CI_Controller
     {
         $result = $this->surat_model->delete($this->input->get('id'));
         echo json_encode($result);
+    }
+
+    public function ajukan()
+    {
+        $result = $this->surat_model->update($this->input->get('id'),['status' => 1]);
+        echo json_encode($result);
+    }
+
+    public function updatestatus()
+    {
+        if($this->input->post('status') == 2){
+            $data['status'] = 2;
+            $data['deskripsi'] = $this->input->post('deskripsi');
+        }else{
+            $data['status'] = 3;
+        }
+        $result = $this->surat_model->update($this->input->post('id'),$data);
+        redirect('dashboard');
     }
 
 }

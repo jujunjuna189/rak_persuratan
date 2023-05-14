@@ -25,7 +25,7 @@
                         <th>Kategori</th>
                         <th>Rak</th>
                         <th>Tanggal Surat</th>
-                        <th>Aksi</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +36,7 @@
                             <td><?= $val->nama_kategori ?></td>
                             <td><?= $val->nama_rak ?></td>
                             <td><?= $val->tanggal_surat ?></td>
-                            <td><a href="<?= './uploads/'.$val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
+                           
                         </tr>
                     <?php endforeach ?>
                 </tbody>

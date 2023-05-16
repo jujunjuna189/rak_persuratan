@@ -28,7 +28,7 @@
 								<?= $surat->nama_kategori ?> - <?= $surat->tanggal_surat ?>
 							</span>
 						</div>
-						<?php if($this->session->userdata('role')->role_key == 2) : ?>
+						<?php if($this->session->userdata('role')->role_key == 2 || $this->session->userdata('role')->role_key == 3) : ?>
 							<div>
 							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= $surat->id ?>">
 							Setujui
@@ -71,7 +71,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-			<button type="button" class="btn btn-primary btn-save">Setujui</button>
+			<button type="button" class="btn btn-dark btn-save">Setujui</button>
 		</div>
 	</form>
     </div>
@@ -96,7 +96,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-			<button type="submit" class="btn btn-primary btn-save">Tolak</button>
+			<button type="submit" class="btn btn-dark btn-save">Tolak</button>
 		</div>
 	</form>
     </div>

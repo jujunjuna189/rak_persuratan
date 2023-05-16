@@ -13,6 +13,11 @@
                 </a>
             </div>
         </div>
+        <?php if($this->session->flashdata('error')) : ?>
+        <div class="alert alert-warning">
+            <span><?= $this->session->flashdata('error') ?></span>
+        </div>
+        <?php endif ?>
         <hr class="border" />
         <div class="table-responsive">
             <table class="table table-striped">

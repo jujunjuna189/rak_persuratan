@@ -44,6 +44,11 @@ class PenggunaController extends CI_Controller
     public function store()
     {
         $data = $this->data();
+        $query = $this->db->get_where('users',['username' => $data['username']])->result();
+        if($query){
+            $this->session->set_flashdata('error','Username telah digunakan');
+            redirect('pengguna');
+        }
 
         $this->pengguna_model->store($data);
         redirect('pengguna');
@@ -52,7 +57,13 @@ class PenggunaController extends CI_Controller
     public function update()
     {
         $data = $this->data();
-
+        $query = $this->db->get_where('users',['id' => $this->input->post('id')])->result()[0];
+        if($query){
+            if($query->username != $data['username']){
+                $this->session->set_flashdata('error','Username telah digunakan');
+                redirect('pengguna');
+            }
+        }
         $this->pengguna_model->update($this->input->post('id'), $data);
         redirect('pengguna');
     }

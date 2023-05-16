@@ -8,7 +8,7 @@ $CI->load->model('RakModel','rak_model');
         <div class="d-flex justify-content-between">
             <h4>surat Surat</h4>
             <div>
-            <?php if($this->session->userdata('role')->role_key == 1) : ?>
+            <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
                 <a href="#" class="btn btn-dark fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add">
                     Tambah
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -35,7 +35,7 @@ $CI->load->model('RakModel','rak_model');
                         <th>Status</th>
                         <th>TTD</th>
                         <th>Deskriprsi</th>
-                        <?php if($this->session->userdata('role')->role_key == 1) : ?>
+                        <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
                         <th>Aksi</th>
                         <?php endif ?>
                     </tr>
@@ -43,7 +43,7 @@ $CI->load->model('RakModel','rak_model');
                 <tbody>
                     <?php foreach ($rak as $index => $valRak) : ?>
                         <tr class="bg-light">
-                            <td colspan="10"><?= $valRak->nama_rak ?></td>
+                            <td colspan="11"><?= $valRak->nama_rak ?></td>
                         </tr>
                         <?php
                             $listSurat = $CI->rak_model->getSurat($valRak->id);    
@@ -79,7 +79,7 @@ $CI->load->model('RakModel','rak_model');
                                     <?= $val->deskripsi ?>
                                 <?php endif ?>
                             </td>
-                            <?php if($this->session->userdata('role')->role_key == 1) : ?>
+                            <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
                             <td>
                                 <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

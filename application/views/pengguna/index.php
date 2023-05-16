@@ -123,6 +123,7 @@
                     </div>
                     <div class="px-3">
                         <div class="form-group mb-3">
+                        <input type="hidden" name="id" id="id">
                             <label for="Nama Pengguna">Nama Pengguna</label>
                             <input type="text" name="nama" id="nama" class="form-control fw-semibold" placeholder="...">
                         </div>

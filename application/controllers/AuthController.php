@@ -30,9 +30,7 @@ class AuthController extends CI_Controller
             $this->session->set_userdata(['user' => $login[0]]);
             redirect('dashboard');
         } else {
-            $this->session->set_flashdata('error', [
-                'message' => 'Gagal login',
-            ]);
+            $this->session->set_flashdata('error','Periksa Kembali Username & Password');
             redirect('login');
         }
     }

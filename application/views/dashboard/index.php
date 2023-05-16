@@ -33,7 +33,9 @@
 							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= $surat->id ?>">
 							Setujui
 							</button>
-								<a href="" class="btn btn-danger">Tolak</a>
+							<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalTolak" data-id="<?= $surat->id ?>">
+							Tolak
+							</button>
 							</div>
 						<?php endif ?>
 					</div>
@@ -75,8 +77,37 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalTolak" tabindex="-1" aria-labelledby="modalTolakLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTolakLabel">Tolak Surat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="<?= base_url('surat/updatestatus') ?>" method="post" enctype="multipart/form-data" >
+			<div class="form-group">
+				<label for="">Deskripsi</label>
+				<input type="hidden" name="id" id="id">
+				<input type="hidden" name="status" id="status" value="3">
+				<textarea name="deskripsi" class="form-control" id="" cols="30" rows="1" required></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+			<button type="submit" class="btn btn-primary btn-save">Tolak</button>
+		</div>
+	</form>
+    </div>
+  </div>
+</div>
 <script>
 	$('#exampleModal').on('show.bs.modal', function(e) {
+		var suratId = $(e.relatedTarget).data('id');
+		$(e.currentTarget).find('input[name="id"]').val(suratId);
+	});
+	$('#modalTolak').on('show.bs.modal', function(e) {
 		var suratId = $(e.relatedTarget).data('id');
 		$(e.currentTarget).find('input[name="id"]').val(suratId);
 	});

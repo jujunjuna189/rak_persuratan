@@ -18,7 +18,15 @@
                     Dashboard
                 </a>
             </li>
-            <?php if($this->session->userdata('role')->role_key == 1) : ?>
+            <?php if($this->session->userdata('role')->role_key == 3) : ?>
+            <li class="nav-item border-bottom">
+                <a href="<?= base_url('pengguna') ?>" class="nav-link fw-semibold d-flex py-3 align-items-center text-dark rounded-0">
+                  <span><i class="fa fa-users me-2"></i></span>
+                    Pengguna
+                </a>
+            </li>
+            <?php endif ?>
+            <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3 ) : ?>
                 <li class="nav-item border-bottom">
                 <a href="<?= base_url('rak') ?>" class="nav-link fw-semibold d-flex py-3 align-items-center text-dark rounded-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

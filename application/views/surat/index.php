@@ -34,6 +34,7 @@ $CI->load->model('RakModel','rak_model');
                         <th>File Disposisi</th>
                         <th>Status</th>
                         <th>TTD</th>
+                        <th>Deskriprsi</th>
                         <?php if($this->session->userdata('role')->role_key == 1) : ?>
                         <th>Aksi</th>
                         <?php endif ?>
@@ -71,6 +72,11 @@ $CI->load->model('RakModel','rak_model');
                             <td>
                                 <?php if($val->ttd != null || $val->ttd != '') : ?>
                                     <img src="<?= $val->ttd ?>" width="150">
+                                <?php endif ?>
+                            </td>
+                            <td>
+                                <?php if($val->deskripsi != null || $val->deskripsi != '') : ?>
+                                    <?= $val->deskripsi ?>
                                 <?php endif ?>
                             </td>
                             <?php if($this->session->userdata('role')->role_key == 1) : ?>

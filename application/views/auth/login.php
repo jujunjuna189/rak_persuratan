@@ -41,13 +41,15 @@
                                     </span>
                                 </div>
                             </div>
+                            <?php if($this->session->flashdata('error')) : ?>
+                            <div class="alert alert-warning">
+                                <span><?= $this->session->flashdata('error') ?></span>
+                            </div>
+                            <?php endif ?>
                             <div class="form-group mb-2">
                                 <button type="submit" class="btn btn-warning fw-semibold px-3">
                                     Masuk
                                 </button>
-                            </div>
-                            <div>
-                                Belum punya akun ?<a href="<?= base_url('register') ?>"> Daftar</a>
                             </div>
                         </div>
                     </form>

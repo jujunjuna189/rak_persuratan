@@ -56,7 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 // Login
 $route['login'] = 'AuthController/index';
 $route['onLogin'] = 'AuthController/onLogin';
-$route['register'] = 'AuthController/register';
+// $route['register'] = 'AuthController/register';
 $route['onRegister'] = 'AuthController/onRegister';
 // Dashboard
 $route['dashboard'] = 'DashboardController/index';
@@ -84,3 +84,10 @@ $route['surat/updatestatus'] = 'SuratController/updatestatus';
 
 // Laporan
 $route['laporan'] = 'LaporanController/index';
+
+// Pengguna
+$route['pengguna'] = 'PenggunaController/index';
+$route['pengguna/store'] = 'PenggunaController/store';
+$route['pengguna/get-by-id'] = 'PenggunaController/getById';
+$route['pengguna/update'] = 'PenggunaController/update';
+$route['pengguna/delete'] = 'PenggunaController/delete';

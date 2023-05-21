@@ -5,6 +5,11 @@ $CI->load->model('RakModel','rak_model');
 ?>
 <div class="card mt-2">
     <div class="card-body">
+    <?php if($this->session->flashdata('success')) : ?>
+    <div class="alert alert-warning">
+        <span><?= $this->session->flashdata('success') ?></span>
+    </div>
+    <?php endif ?>
         <div class="d-flex justify-content-between">
             <h4>surat Surat</h4>
             <div>

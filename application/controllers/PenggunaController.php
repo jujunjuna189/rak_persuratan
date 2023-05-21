@@ -51,6 +51,7 @@ class PenggunaController extends CI_Controller
         }
 
         $this->pengguna_model->store($data);
+        $this->session->set_flashdata('success','Berhasil Menambah Data');
         redirect('pengguna');
     }
 
@@ -65,6 +66,7 @@ class PenggunaController extends CI_Controller
             }
         }
         $this->pengguna_model->update($this->input->post('id'), $data);
+        $this->session->set_flashdata('success','Berhasil Mengupdate Data');
         redirect('pengguna');
     }
 

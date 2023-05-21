@@ -62,7 +62,9 @@ class SuratController extends CI_Controller
         $this->upload->do_upload('file_disposisi');
         $uploaded_data2 = $this->upload->data();
         $data['file_disposisi'] = $uploaded_data2['file_name'];
+        $data['status'] = 0;
         $this->surat_model->store($data);
+        $this->session->set_flashdata('success','Berhasil Menambah Data');
         redirect('surat');
     }
 
@@ -117,6 +119,7 @@ class SuratController extends CI_Controller
             $data['file_disposisi'] = $uploaded_data['file_name'];
         }
         $this->surat_model->update($this->input->post('id'), $data);
+        $this->session->set_flashdata('success','Berhasil Mengupdate Data');
         redirect('surat');
     }
 
@@ -142,6 +145,7 @@ class SuratController extends CI_Controller
             $data['status'] = 3;
         }
         $result = $this->surat_model->update($this->input->post('id'),$data);
+        $this->session->set_flashdata('success','Berhasil Mengupdate Data');
         redirect('dashboard');
     }
 

@@ -42,6 +42,7 @@ class KategoriController extends CI_Controller
         $data = $this->data();
 
         $this->kategori_model->store($data);
+        $this->session->set_flashdata('success','Berhasil Menambah Data');
         redirect('kategori');
     }
 
@@ -50,6 +51,7 @@ class KategoriController extends CI_Controller
         $data = $this->data();
 
         $this->kategori_model->update($this->input->post('id'), $data);
+        $this->session->set_flashdata('success','Berhasil Mengupdate Data');
         redirect('kategori');
     }
 

@@ -28,7 +28,7 @@
 								<?= $surat->nama_kategori ?> - <?= $surat->tanggal_surat ?>
 							</span>
 						</div>
-						<?php if($this->session->userdata('role')->role_key == 2 || $this->session->userdata('role')->role_key == 3) : ?>
+						<?php if($this->session->userdata('role')->role_key == 2 ) : ?>
 							<div>
 							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= $surat->id ?>">
 							Setujui

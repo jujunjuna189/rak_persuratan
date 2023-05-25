@@ -39,7 +39,7 @@ class KategoriModel extends CI_Model
     {
         $this->db->select('COUNT(surat.id) as total,kategori.nama_kategori');
         $this->db->group_by('surat.kategori_id');
-        $this->db->join('kategori','surat.kategori_id=kategori.id');
+        $this->db->join('kategori', 'surat.kategori_id=kategori.id');
         $query = $this->db->get('surat');
         return $query->result();
     }

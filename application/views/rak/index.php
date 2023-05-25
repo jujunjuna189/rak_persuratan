@@ -98,7 +98,7 @@
             <div class="modal-body">
                 <form action="<?= base_url('rak/update') ?>" method="post">
                     <div class="d-flex justify-content-between mb-4">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Kategori</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Rak</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="px-3">

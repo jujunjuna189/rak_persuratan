@@ -1,28 +1,28 @@
 <?php
-$CI =& get_instance();
-$CI->load->model('RakModel','rak_model');
+$CI = &get_instance();
+$CI->load->model('RakModel', 'rak_model');
 
 ?>
 <div class="card mt-2">
     <div class="card-body">
-    <?php if($this->session->flashdata('success')) : ?>
-    <div class="alert alert-warning">
-        <span><?= $this->session->flashdata('success') ?></span>
-    </div>
-    <?php endif ?>
+        <?php if ($this->session->flashdata('success')) : ?>
+            <div class="alert alert-warning">
+                <span><?= $this->session->flashdata('success') ?></span>
+            </div>
+        <?php endif ?>
         <div class="d-flex justify-content-between">
             <h4>surat Surat</h4>
             <div>
-            <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
-                <a href="#" class="btn btn-dark fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add">
-                    Tambah
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 5l0 14"></path>
-                        <path d="M5 12l14 0"></path>
-                    </svg>
-                </a>
-            <?php endif ?>
+                <?php if ($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
+                    <a href="#" class="btn btn-dark fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add">
+                        Tambah
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M12 5l0 14"></path>
+                            <path d="M5 12l14 0"></path>
+                        </svg>
+                    </a>
+                <?php endif ?>
             </div>
         </div>
         <hr class="border" />
@@ -40,8 +40,8 @@ $CI->load->model('RakModel','rak_model');
                         <th>Status</th>
                         <th>TTD</th>
                         <th>Deskriprsi</th>
-                        <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
-                        <th>Aksi</th>
+                        <?php if ($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
+                            <th>Aksi</th>
                         <?php endif ?>
                     </tr>
                 </thead>
@@ -51,66 +51,69 @@ $CI->load->model('RakModel','rak_model');
                             <td colspan="11"><?= $valRak->nama_rak ?></td>
                         </tr>
                         <?php
-                            $listSurat = $CI->rak_model->getSurat($valRak->id);    
+                        $listSurat = $CI->rak_model->getSurat($valRak->id);
                         ?>
                         <?php foreach ($listSurat as $index => $val) : ?>
-                        <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= $val->nama_surat ?></td>
-                            <td><?= $val->nama_kategori ?></td>
-                            <td><?= $val->nama_rak ?></td>
-                            <td><?= $val->tanggal_surat ?></td>
-                            <td><a href="<?= './uploads/'.$val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
-                            <td><a href="<?= './uploads/'.$val->file_disposisi ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
-                            <td><?php
-                                if($val->status == 0){
-                                    echo 'Pending';
-                                }elseif($val->status == 1){
-                                    echo 'Sedang Diajukan';
-                                }elseif($val->status == 2){
-                                    echo 'Disetujui';
-                                }
-                                else{
-                                    echo 'Ditolak';
-                                }
-                            ?></td>
-                            <td>
-                                <?php if($val->ttd != null || $val->ttd != '') : ?>
-                                    <img src="<?= $val->ttd ?>" width="150">
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $val->nama_surat ?></td>
+                                <td><?= $val->nama_kategori ?></td>
+                                <td><?= $val->nama_rak ?></td>
+                                <td><?= $val->tanggal_surat ?></td>
+                                <td><a href="<?= './uploads/' . $val->file_surat ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
+                                <td><a href="<?= './uploads/' . $val->file_disposisi ?>" target="_blank" class="text-dark"><i class="fa fa-download"></i></a></td>
+                                <td><?php
+                                    if ($val->status == 0) {
+                                        echo 'Pending';
+                                    } elseif ($val->status == 1) {
+                                        echo 'Sedang Diajukan';
+                                    } elseif ($val->status == 2) {
+                                        echo 'Disetujui';
+                                    } else {
+                                        echo 'Ditolak';
+                                    }
+                                    ?></td>
+                                <td>
+                                    <?php if ($val->ttd != null || $val->ttd != '') : ?>
+                                        <img src="<?= $val->ttd ?>" width="150">
+                                    <?php endif ?>
+                                </td>
+                                <td>
+                                    <?php if ($val->deskripsi != null || $val->deskripsi != '') : ?>
+                                        <?= $val->deskripsi ?>
+                                    <?php endif ?>
+                                </td>
+                                <?php if ($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
+                                    <td>
+                                        <?php if ($val->status == 0 || $val->status == 1) : ?>
+                                            <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
+                                                    <path d="M13.5 6.5l4 4"></path>
+                                                </svg>
+                                            </span>
+                                        <?php endif ?>
+                                        <?php if ($val->status == 0) : ?>
+                                            <span class="p-1 rounded" style="cursor:pointer;" onclick="ajukanData('<?= $val->id ?>')"><i class="fa fa-upload text-dark"></i></span>
+                                        <?php endif ?>
+                                        <?php if ($val->status == 0 || $val->status == 1) : ?>
+                                            <span class="ms-2" style="cursor: pointer;" onclick="deleteData('<?= $val->id ?>')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M4 7l16 0"></path>
+                                                    <path d="M10 11l0 6"></path>
+                                                    <path d="M14 11l0 6"></path>
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                                </svg>
+                                            </span>
+                                        <?php endif ?>
+                                    </td>
                                 <?php endif ?>
-                            </td>
-                            <td>
-                                <?php if($val->deskripsi != null || $val->deskripsi != '') : ?>
-                                    <?= $val->deskripsi ?>
-                                <?php endif ?>
-                            </td>
-                            <?php if($this->session->userdata('role')->role_key == 1 || $this->session->userdata('role')->role_key == 3) : ?>
-                            <td>
-                                <span class="p-1 rounded" style="cursor: pointer;" onclick="updateData('<?= $val->id ?>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
-                                        <path d="M13.5 6.5l4 4"></path>
-                                    </svg>
-                                </span>
-                                <?php if($val->status == 0) : ?>
-                                    <span class="p-1 rounded" style="cursor:pointer;" onclick="ajukanData('<?= $val->id ?>')"><i class="fa fa-upload text-dark"></i></span>
-                                <?php endif ?>
-                                <span class="ms-2" style="cursor: pointer;" onclick="deleteData('<?= $val->id ?>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-dark" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M4 7l16 0"></path>
-                                        <path d="M10 11l0 6"></path>
-                                        <path d="M14 11l0 6"></path>
-                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                                    </svg>
-                                </span>
-                            </td>
-                            <?php endif ?>
-                        </tr>
+                            </tr>
+                        <?php endforeach ?>
                     <?php endforeach ?>
-                <?php endforeach ?>
                 </tbody>
             </table>
         </div>
@@ -131,7 +134,7 @@ $CI->load->model('RakModel','rak_model');
                         <div class="form-group mb-3">
                             <label for="Kategori surat">Kategori surat</label>
                             <select name="kategori_id" id="kategori_id" class="form-control fw-semibold">
-                                <?php foreach($kategori as $kategoriSurat) : ?>
+                                <?php foreach ($kategori as $kategoriSurat) : ?>
                                     <option value="<?= $kategoriSurat->id ?>"><?= $kategoriSurat->nama_kategori ?></option>
                                 <?php endforeach ?>
                             </select>
@@ -139,9 +142,9 @@ $CI->load->model('RakModel','rak_model');
                     </div>
                     <div class="px-3">
                         <div class="form-group mb-3">
-                        <label for="Rak surat">Rak surat</label>
+                            <label for="Rak surat">Rak surat</label>
                             <select name="rak_id" id="rak_id" class="form-control fw-semibold">
-                            <?php foreach($rak as $rakSurat) : ?>
+                                <?php foreach ($rak as $rakSurat) : ?>
                                     <option value="<?= $rakSurat->id ?>"><?= $rakSurat->nama_rak ?></option>
                                 <?php endforeach ?>
                             </select>
@@ -195,7 +198,7 @@ $CI->load->model('RakModel','rak_model');
                             <input type="hidden" name="id" id="id">
                             <label for="Kategori surat">Kategori surat</label>
                             <select name="kategori_id" id="kategori_id" class="form-control fw-semibold">
-                                <?php foreach($kategori as $kategoriSurat) : ?>
+                                <?php foreach ($kategori as $kategoriSurat) : ?>
                                     <option value="<?= $kategoriSurat->id ?>"><?= $kategoriSurat->nama_kategori ?></option>
                                 <?php endforeach ?>
                             </select>
@@ -203,9 +206,9 @@ $CI->load->model('RakModel','rak_model');
                     </div>
                     <div class="px-3">
                         <div class="form-group mb-3">
-                        <label for="Rak surat">Rak surat</label>
+                            <label for="Rak surat">Rak surat</label>
                             <select name="rak_id" id="rak_id" class="form-control fw-semibold">
-                            <?php foreach($rak as $rakSurat) : ?>
+                                <?php foreach ($rak as $rakSurat) : ?>
                                     <option value="<?= $rakSurat->id ?>"><?= $rakSurat->nama_rak ?></option>
                                 <?php endforeach ?>
                             </select>
